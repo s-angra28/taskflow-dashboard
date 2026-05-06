@@ -4,12 +4,56 @@ import ProjectCard from "./components/ProjectCard";
 import type { Project } from "./types/project";
 
 function App() {
+  
   const [projects, setProjects] = useState<Project[]>(() => {
-    const savedProjects = localStorage.getItem("projects");
-    return savedProjects ? JSON.parse(savedProjects) : [];
-  });
+  const savedProjects = localStorage.getItem("projects");
+
+  if (savedProjects) {
+    return JSON.parse(savedProjects);
+  }
+
+  return [
+    {
+      id: "1",
+      title: "Portfolio Website",
+      description:
+        "Build personal portfolio using React",
+      priority: "High",
+      status: "Completed",
+      category: "Work",
+    },
+    {
+      id: "2",
+      title: "Resume Optimization",
+      description:
+        "Tailor resume for software roles",
+      priority: "High",
+      status: "In Progress",
+      category: "Career",
+    },
+    {
+      id: "3",
+      title: "Bug Testing Practice",
+      description:
+        "Create QA testing scenarios",
+      priority: "Medium",
+      status: "Not Started",
+      category: "QA",
+    },
+    {
+      id: "4",
+      title: "TaskFlow Enhancements",
+      description:
+        "Add API integration and improvements",
+      priority: "High",
+      status: "In Progress",
+      category: "Development",
+    },
+  ];
+});
 
   const [search, setSearch] = useState("");
+  const [showHelp, setShowHelp] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("projects", JSON.stringify(projects));
@@ -84,17 +128,62 @@ function App() {
         background: "#f4f7fb",
       }}
     >
-      <h1
-        style={{
-          textAlign: "center",
-          marginBottom: "30px",
-          fontSize: "36px",
-          color: "#1e3a8a",
-          fontWeight: "bold",
-        }}
-      >
-        TaskFlow Dashboard
-      </h1>
+      <div
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "30px",
+  }}
+>
+  <h1
+    style={{
+      fontSize: "36px",
+      color: "#1e3a8a",
+      fontWeight: "bold",
+      margin: 0,
+    }}
+  >
+    TaskFlow Dashboard
+  </h1>
+
+  <button
+    onClick={() => setShowHelp(!showHelp)}
+    style={{
+      padding: "10px 16px",
+      border: "none",
+      borderRadius: "8px",
+      background: "#2563eb",
+      color: "white",
+      cursor: "pointer",
+    }}
+  >
+    {showHelp ? "Hide Help" : "Help"}
+  </button>
+</div>
+      
+    {showHelp && (
+  <div
+    style={{
+      background: "white",
+      padding: "20px",
+      borderRadius: "12px",
+      marginBottom: "20px",
+      boxShadow:
+        "0 4px 12px rgba(0,0,0,0.08)",
+    }}
+  >
+    <h3>Quick Guide</h3>
+    <p>1. Add a new project</p>
+    <p>2. Edit title or description</p>
+    <p>3. Update project status</p>
+    <p>4. Search existing projects</p>
+    <p>5. Delete when complete</p>
+  </div>
+)}
+    
+
+
 
       <div
         style={{
